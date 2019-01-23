@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,6 +17,21 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+
+  /***************Numero de los talons*********/
+	private static final int FRONT_LEFT_CHASSIS_PORT = 7;
+	private static final int FRONT_RIGHT_CHASSIS_PORT = 5;
+	private static final int BACK_LEFT_CHASSIS_PORT = 8;
+	private static final int BACK_RIGHT_CHASSIS_PORT = 6;
+  /********************************************/
+  
+  /*************chasis************************/
+	public static WPI_TalonSRX frontLeft;
+	public static WPI_TalonSRX frontRight;
+	public static WPI_TalonSRX backLeft;
+	public static WPI_TalonSRX backRight;
+	/*******************************************/
+	
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
   // public static int leftMotor = 1;
@@ -23,4 +41,21 @@ public class RobotMap {
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
+
+  public static void init(){
+    frontLeft = new WPI_TalonSRX(FRONT_LEFT_CHASSIS_PORT);
+		frontRight = new WPI_TalonSRX(FRONT_RIGHT_CHASSIS_PORT);
+		backLeft = new WPI_TalonSRX(BACK_LEFT_CHASSIS_PORT);
+    backRight = new WPI_TalonSRX(BACK_RIGHT_CHASSIS_PORT);
+    
+    frontLeft.setInverted(true);
+    backLeft.setInverted(true);
+    frontRight.setInverted(false);
+    backRight.setInverted(false);
+
+    frontLeft.setNeutralMode(NeutralMode.Coast);
+		frontRight.setNeutralMode(NeutralMode.Coast);
+		backLeft.setNeutralMode(NeutralMode.Coast);
+		backRight.setNeutralMode(NeutralMode.Coast);
+  }
 }
