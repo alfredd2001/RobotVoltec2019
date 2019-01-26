@@ -8,6 +8,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.VictorSP;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 /**
@@ -22,14 +25,18 @@ public class RobotMap {
 	private static final int FRONT_LEFT_CHASSIS_PORT = 7;
 	private static final int FRONT_RIGHT_CHASSIS_PORT = 5;
 	private static final int BACK_LEFT_CHASSIS_PORT = 8;
-	private static final int BACK_RIGHT_CHASSIS_PORT = 6;
+  private static final int BACK_RIGHT_CHASSIS_PORT = 6;
+  
+  private static final int MID_PORT = 0;
   /********************************************/
   
   /*************chasis************************/
 	public static WPI_TalonSRX frontLeft;
 	public static WPI_TalonSRX frontRight;
 	public static WPI_TalonSRX backLeft;
-	public static WPI_TalonSRX backRight;
+  public static WPI_TalonSRX backRight;
+  
+  public static VictorSP midMotor;
 	/*******************************************/
 	
   // For example to map the left and right motors, you could define the
@@ -47,15 +54,18 @@ public class RobotMap {
 		frontRight = new WPI_TalonSRX(FRONT_RIGHT_CHASSIS_PORT);
 		backLeft = new WPI_TalonSRX(BACK_LEFT_CHASSIS_PORT);
     backRight = new WPI_TalonSRX(BACK_RIGHT_CHASSIS_PORT);
+
+    midMotor = new VictorSP(MID_PORT);
     
     frontLeft.setInverted(true);
     backLeft.setInverted(true);
     frontRight.setInverted(false);
     backRight.setInverted(false);
+    midMotor.setInverted(false);
 
     frontLeft.setNeutralMode(NeutralMode.Coast);
 		frontRight.setNeutralMode(NeutralMode.Coast);
 		backLeft.setNeutralMode(NeutralMode.Coast);
-		backRight.setNeutralMode(NeutralMode.Coast);
+    backRight.setNeutralMode(NeutralMode.Coast);
   }
 }
