@@ -8,8 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ExampleCommand;
@@ -27,18 +29,25 @@ public class Chassis extends Subsystem {
   private static final double TOLERANCE=0.15;  //tolerancia del joystick(quita el error)
 	private static final double LIMITER=1;  //Por si quieren limitar la velocidad del drive
 	private static int direction = 1;  //para invertir los ejes si necesario
-	private static WPI_TalonSRX[] talons;  //arreglo para guadar los talon del chasis
-
+	//private static WPI_TalonSRX[] talons;  //arreglo para guadar los talon del chasis
+	private static DifferentialDrive differentialDrive;
+	private static SpeedControllerGroup m_left;
+	private static SpeedControllerGroup m_right;
+	private static VictorSP mid;
   //////////constructor de la clase/////////////////////
 	public Chassis(){
-		talons=new WPI_TalonSRX[]{RobotMap.frontLeft,RobotMap.frontRight,
-			   RobotMap.backLeft,RobotMap.backRight};
+		/*talons=new WPI_TalonSRX[]{RobotMap.frontLeft,RobotMap.frontRight,
+				 RobotMap.backLeft,RobotMap.backRight};*/
+		m_left = new SpeedControllerGroup(RobotMap.frontLeft, RobotMap.backLeft);
+		m_right = new SpeedControllerGroup(RobotMap.frontRight, RobotMap.backRight); 
+		differentialDrive = new DifferentialDrive(m_left, m_right);
+		mid= RobotMap.midMotor;
 	}
   //////////////////////////////////////////////////////
   
 	////para poner todo en la posicion inicial/////
 	public void InitDefaultState() {
-		Stop_drive();
+		
 	}
   //////////////////////////////////////////////
   ////////funcion principal del drive(tanque)//////////////////////////////////////
@@ -46,47 +55,20 @@ public class Chassis extends Subsystem {
 		//lee el control 1
 		Joystick joystick=Robot.m_oi.Stick1;
 		//lee cada eje de los joystick y les quita el error y mapea
-		double LeftStick = mapDoubleT(joystick.getRawAxis(1),TOLERANCE,1,0,1)*direction, 
-		RightStick = mapDoubleT(joystick.getRawAxis(3),TOLERANCE,1,0,1)*direction;
-	
-		talons[0].set(ControlMode.PercentOutput,LeftStick*LIMITER);
-		talons[1].set(ControlMode.PercentOutput,RightStick*LIMITER);
-		talons[2].set(ControlMode.PercentOutput,LeftStick*LIMITER);
-		talons[3].set(ControlMode.PercentOutput,RightStick*LIMITER);	
+		
+		differentialDrive.arcadeDrive(-joystick.getRawAxis(2), joystick.getRawAxis(1));
+		mid.set(joystick.getRawAxis(0));
+
 	}
   /////////////////////////////////////////////////////////////////
 
-    
-  //////funcion para detener el drive///////////
-  public void Stop_drive() {
-    for(WPI_TalonSRX talon:talons) {
-      talon.set(ControlMode.PercentOutput, 0.0);
-    }
+	public void Stop_drive() {
+   	differentialDrive.stopMotor();
   }
-    ///////////////////////////////////////////////
-
-  ///////////////////////////////////////////////
-
-	///para mapear un numero de un rango a otro rango
-	private double map(double x, double in_min, double in_max, double out_min, double out_max)
-	{
-		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-	}
-	
-	private double mapDoubleT(double x, double in_min, double in_max, double out_min, double out_max)
-	{
-		if(Math.abs(x)<TOLERANCE) {
-			return 0;
-		}
-		if(x<0){
-			return map(x,-in_min,-in_max,-out_min,-out_max);
-		}
-		return map(x,in_min,in_max,out_min,out_max);
-	}
-	///////////////////////////////////////////////////////////////////
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-		setDefaultCommand(new ExampleCommand());
+		// setDefaultCommand(new ExampleCommand());
   }  
 }
