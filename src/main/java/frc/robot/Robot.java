@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -25,6 +26,8 @@ import frc.robot.subsystems.Vision;
 import frc.robot.RobotMap;
 
 public class Robot extends TimedRobot {
+  public static OI m_oi;
+
 
   /********subsistemas del robot*******************************/
 	public static Chassis chassis;
@@ -37,8 +40,6 @@ public class Robot extends TimedRobot {
   public static Control control;
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	/****************************************************************************************/
-  
-  public static OI m_oi;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -50,6 +51,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     RobotMap.init(); //Codigo agregado por Ian
+    m_oi = new OI();
+    
    /*******aqui vamos inicializar los subsystemas que se necesite*************************/
 		chassis = new Chassis();
 		elevator = new Elevator();
@@ -61,7 +64,7 @@ public class Robot extends TimedRobot {
 		control = new Control();
 		/*************************************************************************************/
 
-    m_oi = new OI();
+    
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
@@ -77,6 +80,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+  
   }
 
   /**
@@ -146,6 +150,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
   }
 
   /**

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.ExampleCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -86,6 +87,6 @@ public class Chassis extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new ExampleCommand());
   }  
 }

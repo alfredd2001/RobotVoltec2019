@@ -63,9 +63,9 @@ public class RobotMap {
     backRight.setInverted(false);
     midMotor.setInverted(false);
 
-    frontLeft.setNeutralMode(NeutralMode.Coast);
-		frontRight.setNeutralMode(NeutralMode.Coast);
-		backLeft.setNeutralMode(NeutralMode.Coast);
-    backRight.setNeutralMode(NeutralMode.Coast);
+    frontLeft.setNeutralMode(NeutralMode.Brake);
+		frontRight.setNeutralMode(NeutralMode.Brake);
+		backLeft.setNeutralMode(NeutralMode.Brake);
+    backRight.setNeutralMode(NeutralMode.Brake);
   }
 }

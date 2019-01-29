@@ -24,7 +24,7 @@ public class OI {
 		 Stick1 = new Joystick(0);  //une el josytick al objeto
 		 Stick2 = new Joystick(1);  //une el josytick al objeto
      ////////////////////////////////////////////////////////////////////////
-     
+    
 
 
 
