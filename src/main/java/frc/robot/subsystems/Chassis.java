@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
@@ -17,31 +18,40 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ExampleCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SerialPort.Port;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 /**
  * Add your docs here.
  */
-public class Chassis extends Subsystem {
+public class Chassis extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static final double TOLERANCE=0.15;  //tolerancia del joystick(quita el error)
-	private static final double LIMITER=1;  //Por si quieren limitar la velocidad del drive
 	private static int direction = 1;  //para invertir los ejes si necesario
 	//private static WPI_TalonSRX[] talons;  //arreglo para guadar los talon del chasis
-	private static DifferentialDrive differentialDrive;
+	public static DifferentialDrive differentialDrive;
 	private static SpeedControllerGroup m_left;
 	private static SpeedControllerGroup m_right;
 	private static VictorSP mid;
+	public static AHRS ahrs;
+	public static double kToleranceDegrees = 2.0;
   //////////constructor de la clase/////////////////////
 	public Chassis(){
-		/*talons=new WPI_TalonSRX[]{RobotMap.frontLeft,RobotMap.frontRight,
-				 RobotMap.backLeft,RobotMap.backRight};*/
+		super("Chassis", RobotMap.KpChassisGyro, RobotMap.KiChassisGyro, RobotMap.KdChassisGyro);
+		ahrs = new AHRS(Port.kUSB);
 		m_left = new SpeedControllerGroup(RobotMap.frontLeft, RobotMap.backLeft);
 		m_right = new SpeedControllerGroup(RobotMap.frontRight, RobotMap.backRight); 
 		differentialDrive = new DifferentialDrive(m_left, m_right);
 		mid= RobotMap.midMotor;
+		setInputRange(-180.0f,  180.0f);
+    setOutputRange(-0.5, 0.5);
+    setAbsoluteTolerance(kToleranceDegrees);
+		getPIDController().setContinuous(true);
 	}
   //////////////////////////////////////////////////////
   
@@ -55,13 +65,15 @@ public class Chassis extends Subsystem {
 		//lee el control 1
 		Joystick joystick=Robot.m_oi.Stick1;
 		//lee cada eje de los joystick y les quita el error y mapea
-		
-		differentialDrive.arcadeDrive(-joystick.getRawAxis(2), joystick.getRawAxis(1));
-		mid.set(joystick.getRawAxis(0));
+		double throttle = (1.0-joystick.getThrottle()) / 2.0;
+		differentialDrive.arcadeDrive(-joystick.getRawAxis(2)*throttle*.7, joystick.getRawAxis(1)*throttle);
+		mid.set(joystick.getRawAxis(0)*throttle);
 
 	}
   /////////////////////////////////////////////////////////////////
-
+	public void setPIDValues(){
+		getPIDController().setPID(RobotMap.KpChassisGyro, RobotMap.KiChassisGyro, RobotMap.KdChassisGyro);
+	}
 	public void Stop_drive() {
    	differentialDrive.stopMotor();
   }
@@ -70,5 +82,15 @@ public class Chassis extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
 		// setDefaultCommand(new ExampleCommand());
-  }  
+  }
+
+	@Override
+	protected double returnPIDInput() {
+		return ahrs.getAngle();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		differentialDrive.tankDrive(output, -output);
+	}
 }

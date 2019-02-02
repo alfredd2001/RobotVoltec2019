@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+import frc.robot.commands.TurnToAngle;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -17,16 +17,31 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   public Joystick Stick1; //declara un joystick
   public Joystick Stick2; //declara un joystick
+
+  public JoystickButton LogitechPOVDown;
+  public JoystickButton LogitechPOVRight; //declara un boton de joystick LT (IO - 6)
+  public JoystickButton LogitechPOVUp;
+  public JoystickButton LogitechPOVLeft;
+
   
   public OI(){
 
     ////////////los dos jostick a utilizar(Joystick1 = Logitech, Joystick2 = xboxone)////////////////
-		 Stick1 = new Joystick(0);  //une el josytick al objeto
-		 Stick2 = new Joystick(1);  //une el josytick al objeto
-     ////////////////////////////////////////////////////////////////////////
+    Stick1 = new Joystick(0);  //une el josytick al objeto stick principal
+    Stick2 = new Joystick(1);  //une el josytick al objeto
     
+   
+   /* ////////////////////////////////////////////////////////////////////////
+    LogitechPOVDown = new JoystickButton(Stick1, 10);    
+    LogitechPOVRight = new JoystickButton(Stick1, 8);
+    LogitechPOVUp = new JoystickButton(Stick1, 7);
+    LogitechPOVLeft = new JoystickButton(Stick1, 9);
 
-
+    LogitechPOVDown.whenReleased(new TurnToAngle(180)); 
+    LogitechPOVUp.whenReleased(new TurnToAngle(0));
+    LogitechPOVRight.whenReleased(new TurnToAngle(90));
+    LogitechPOVLeft.whenReleased(new TurnToAngle(270));
+*/
 
   }
 

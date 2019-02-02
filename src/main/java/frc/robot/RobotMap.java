@@ -37,7 +37,10 @@ public class RobotMap {
   public static WPI_TalonSRX backRight;
   
   public static VictorSP midMotor;
-	/*******************************************/
+  /*******************************************/
+  public static double KpChassisGyro = 0.001;
+  public static double KiChassisGyro = 0.00;
+  public static double KdChassisGyro = 0.00;
 	
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
@@ -67,5 +70,6 @@ public class RobotMap {
 		frontRight.setNeutralMode(NeutralMode.Brake);
 		backLeft.setNeutralMode(NeutralMode.Brake);
     backRight.setNeutralMode(NeutralMode.Brake);
+
   }
 }
