@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,75 +7,54 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
+import frc.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.Encoder;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
+ * Add your docs here.
  */
-public class RobotMap {
+public class Elevator extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-  /*************** Talons *********/
-  public static final WPI_TalonSRX TALON_ELEVATOR = new WPI_TalonSRX(1); // Puerto del talon
-  /********************************************/
+  // seter pid correcto
+  static double p = 0.01;
+  static double i = 0.0;
+  static double d = 0.0;
+  double height;
+  int level = 0;
+  int MotorDirection;
+  boolean override = false;
 
-  /************* chasis ************************/
-  private static final int FRONT_LEFT_CHASSIS_PORT = 7;
-  private static final int FRONT_RIGHT_CHASSIS_PORT = 5;
-  private static final int BACK_LEFT_CHASSIS_PORT = 8;
-  private static final int BACK_RIGHT_CHASSIS_PORT = 6;
-  private static final int MID_PORT = 0;
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+  }
 
-  public static WPI_TalonSRX frontLeft;
-  public static WPI_TalonSRX frontRight;
-  public static WPI_TalonSRX backLeft;
-  public static WPI_TalonSRX backRight;
+  public void elevate(double input) {
 
-  public static VictorSP midMotor;
-  /*******************************************/
+    double height = RobotMap.ENCODER_ELEVATOR.getDistance();
+    Command command;
+    if (height > 26.2) {
 
-  /**************** Encoders *****************/
-  // Setear encoding type correcto
-  public static Encoder ENCODER_ELEVATOR = new Encoder(0, 1, false, EncodingType.k1X);
+    } else if (height > 19.3) {
 
-  // Port numbers, invert counting direction false, and encodingtype
-  /*****************************************/
+    } else if (height > 11.33) {
 
-  // For example to map the left and right motors, you could define the
-  // following variables to use with your drivetrain subsystem.
-  // public static int leftMotor = 1;
-  // public static int rightMotor = 2;
+    } else if (height > 0.01) {
 
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+    } else {
 
-  public static void init() {
-    frontLeft = new WPI_TalonSRX(FRONT_LEFT_CHASSIS_PORT);
-    frontRight = new WPI_TalonSRX(FRONT_RIGHT_CHASSIS_PORT);
-    backLeft = new WPI_TalonSRX(BACK_LEFT_CHASSIS_PORT);
-    backRight = new WPI_TalonSRX(BACK_RIGHT_CHASSIS_PORT);
+    }
 
-    midMotor = new VictorSP(MID_PORT);
-
-    frontLeft.setInverted(true);
-    backLeft.setInverted(true);
-    frontRight.setInverted(false);
-    backRight.setInverted(false);
-    midMotor.setInverted(false);
-
-    frontLeft.setNeutralMode(NeutralMode.Coast);
-    frontRight.setNeutralMode(NeutralMode.Coast);
-    backLeft.setNeutralMode(NeutralMode.Coast);
-    backRight.setNeutralMode(NeutralMode.Coast);
   }
 }
