@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //m_autonomousCommand = m_chooser.getSelected();
     turnToAngle = new TurnToAngle(0);
-    // chassis.ahrs.reset();
+    //chassis.ahrs.reset();
     m_autonomousCommand = turnToAngle;
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -126,7 +126,9 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
-
+    SmartDashboard.putNumber("Kp", RobotMap.KpChassisGyro);
+    SmartDashboard.putNumber("Ki", RobotMap.KiChassisGyro);
+    SmartDashboard.putNumber("Kd", RobotMap.KdChassisGyro);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();

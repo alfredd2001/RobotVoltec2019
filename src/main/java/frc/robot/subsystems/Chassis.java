@@ -40,6 +40,7 @@ public class Chassis extends PIDSubsystem {
 	private static VictorSP mid;
 	public static AHRS ahrs;
 	public static double kToleranceDegrees = 2.0;
+	double sensitivity = 2.7;
   //////////constructor de la clase/////////////////////
 	public Chassis(){
 		super("Chassis", RobotMap.KpChassisGyro, RobotMap.KiChassisGyro, RobotMap.KdChassisGyro);
@@ -49,7 +50,7 @@ public class Chassis extends PIDSubsystem {
 		differentialDrive = new DifferentialDrive(m_left, m_right);
 		mid= RobotMap.midMotor;
 		setInputRange(-180.0f,  180.0f);
-    setOutputRange(-0.5, 0.5);
+    setOutputRange(-1, 1);
     setAbsoluteTolerance(kToleranceDegrees);
 		getPIDController().setContinuous(true);
 	}
@@ -91,6 +92,11 @@ public class Chassis extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		differentialDrive.tankDrive(output, -output);
+		if(Robot.chassis.ahrs.getAngle() < 0 && sensitivity > 0){
+			sensitivity *= -1;
+    } else if (Robot.chassis.ahrs.getAngle() > 0 && sensitivity < 0){
+      sensitivity *= -1;
+    }
+		differentialDrive.tankDrive(-output, -output);
 	}
 }

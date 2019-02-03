@@ -41,9 +41,9 @@ public class RobotMap {
 
   public static VictorSP midMotor;
   /*******************************************/
-  public static double KpChassisGyro = 0.05;
-  public static double KiChassisGyro = 0.00;
-  public static double KdChassisGyro = 0.00;
+  public static double KpChassisGyro = 0.03;
+  public static double KiChassisGyro = 0.001;
+  public static double KdChassisGyro = 0.02;
 
   /**************** Encoders *****************/
   // Setear encoding type correcto
