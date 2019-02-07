@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class TurnToAngle extends Command {
@@ -30,10 +31,11 @@ public class TurnToAngle extends Command {
 
   }
 
-  // Called repeatedly when this Command is scheduled to run
+  // Called repeatedlyP when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.chassis.setPIDValues();
+    
     //Robot.chassis.differentialDrive.arcadeDrive(0.4, .05*-Robot.chassis.ahrs.getAngle());
     /*if(Robot.chassis.ahrs.getAngle() < 0){
       sensitivity *= -1;
@@ -48,8 +50,12 @@ public class TurnToAngle extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-      //return Math.abs(Angle-Robot.chassis.getSetpoint())<10.00;
-    return false;
+    SmartDashboard.putNumber("difference", Angle-Robot.chassis.getSetpoint());
+    SmartDashboard.putNumber("setAngle", Angle);
+    SmartDashboard.putBoolean("isFinished", Math.abs(Angle-Robot.chassis.getSetpoint())<10.00);
+    SmartDashboard.putNumber("Angle", Robot.chassis.ret);
+    return Math.abs(Angle-Robot.chassis.ret)<10.00;
+    //return false;
     
   }
 

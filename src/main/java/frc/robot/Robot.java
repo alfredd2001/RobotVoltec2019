@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
+    
     RobotMap.init(); //Codigo agregado por Ian
     
     
@@ -74,6 +74,7 @@ public class Robot extends TimedRobot {
     chassis.ahrs.reset();
     SmartDashboard.putNumber("Gyro", chassis.ahrs.getAngle());
     SmartDashboard.putData("Auto mode", m_chooser);
+    Joystick joystick=Robot.m_oi.Stick1;
   }
 
   /**
@@ -117,8 +118,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //m_autonomousCommand = m_chooser.getSelected();
-    turnToAngle = new TurnToAngle(0);
-    //chassis.ahrs.reset();
+    chassis.ahrs.reset();
+    turnToAngle = new TurnToAngle(180);
+    
     m_autonomousCommand = turnToAngle;
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -156,23 +158,30 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
   }
-
+  private static Joystick joystick = new Joystick(0);
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    if(joystick.getPOV()!=-1)
+    {
+      turnToAngle = new TurnToAngle(joystick.getPOV());
+    }
     chassis.Main_drive();
     SmartDashboard.putNumber("Gyro", chassis.ahrs.getAngle());
     RobotMap.KpChassisGyro = SmartDashboard.getNumber("Kp", RobotMap.KpChassisGyro);
     RobotMap.KiChassisGyro = SmartDashboard.getNumber("Ki", RobotMap.KiChassisGyro);
     RobotMap.KdChassisGyro = SmartDashboard.getNumber("Kd", RobotMap.KdChassisGyro);
     chassis.setPIDValues();
+    SmartDashboard.putNumber("POV", joystick.getPOV());
+   
   }
 
   /**

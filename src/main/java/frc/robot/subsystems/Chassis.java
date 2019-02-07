@@ -35,19 +35,16 @@ public class Chassis extends PIDSubsystem {
 	private static int direction = 1;  //para invertir los ejes si necesario
 	//private static WPI_TalonSRX[] talons;  //arreglo para guadar los talon del chasis
 	public static DifferentialDrive differentialDrive;
-	private static SpeedControllerGroup m_left;
-	private static SpeedControllerGroup m_right;
-	private static VictorSP mid;
+	private static WPI_TalonSRX mid;
 	public static AHRS ahrs;
-	public static double kToleranceDegrees = 2.0;
+	public static double kToleranceDegrees = 10.0;
 	double sensitivity = 2.7;
+	public static int ret;
   //////////constructor de la clase/////////////////////
 	public Chassis(){
 		super("Chassis", RobotMap.KpChassisGyro, RobotMap.KiChassisGyro, RobotMap.KdChassisGyro);
 		ahrs = new AHRS(Port.kUSB);
-		m_left = new SpeedControllerGroup(RobotMap.frontLeft, RobotMap.backLeft);
-		m_right = new SpeedControllerGroup(RobotMap.frontRight, RobotMap.backRight); 
-		differentialDrive = new DifferentialDrive(m_left, m_right);
+		differentialDrive = new DifferentialDrive(RobotMap.frontLeft, RobotMap.frontRight);
 		mid= RobotMap.midMotor;
 		setInputRange(-180.0f,  180.0f);
     setOutputRange(-1, 1);
@@ -87,7 +84,9 @@ public class Chassis extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		return ahrs.getAngle();
+		ret= (int)(ahrs.getAngle()) % 360;
+		
+		return ret;
 	}
 
 	@Override

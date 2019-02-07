@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -15,10 +17,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Control extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
+  Compressor compressor = RobotMap.Compressor;
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+
   }
+  
+  public void turnCompressorOn() {
+    compressor.setClosedLoopControl(true);
+  }
+  
+  public void turnCompressorOff() {
+    compressor.setClosedLoopControl(false);
+  }
+
+  
+  
 }
