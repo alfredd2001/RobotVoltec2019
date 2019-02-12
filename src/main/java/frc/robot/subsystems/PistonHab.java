@@ -7,14 +7,36 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class PistonHab extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  private DoubleSolenoid frontPistonHab;
+  private DoubleSolenoid rearPistonHab;
+
+  public PistonHab(){
+    frontPistonHab = new DoubleSolenoid(0, RobotMap.FRONT_HAB_PISTON_ACTIVATE, RobotMap.FRONT_HAB_PISTON_DEACTIVATE);
+    addChild("FrontPistonHab",frontPistonHab);
+    
+    rearPistonHab = new DoubleSolenoid(0, RobotMap.REAR_HAB_PISTON_ACTIVATE, RobotMap.REAR_HAB_PISTON_DEACTIVATE);
+    addChild("RearPistonHab",rearPistonHab);
+  }
+
+  public void PistonsActivate(){
+    frontPistonHab.set(Value.kForward);
+    rearPistonHab.set(Value.kForward);
+  }
+  public void FrontPistonDeactivate(){
+    frontPistonHab.set(Value.kReverse);
+  }
+  public void RearPistonDeactivate(){
+    rearPistonHab.set(Value.kReverse);
+  }
 
   @Override
   public void initDefaultCommand() {

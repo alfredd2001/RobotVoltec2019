@@ -177,7 +177,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("POV", joystick.getPOV());
    
   }
-
   /**
    * This function is called periodically during test mode.
    */

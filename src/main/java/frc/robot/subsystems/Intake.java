@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -26,36 +27,38 @@ public class Intake extends Subsystem {
   private static DoubleSolenoid hPiston;
 
   public Intake() {
-      leftIntakeWheel = RobotMap.intakeLeft; 
-      rightIntakeWheel = RobotMap.intakeRight;
-      pivoteIntake = RobotMap.intakePivote;
-      hPiston= RobotMap.HPiston;
+    leftIntakeWheel = RobotMap.intakeLeft; 
+    rightIntakeWheel = RobotMap.intakeRight;
+    pivoteIntake = RobotMap.intakePivote;
+    hPiston= RobotMap.HPiston;
   }
   public void Up_Intake(){
-      SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
-     /*if(pivoteIntake.getSelectedSensorPosition()> PUT SENOSR VALUE){
-          pivoteIntake.set(ControlMode.PercentOutput, 1);
+    SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
+   /*if(pivoteIntake.getSelectedSensorPosition()> PUT SENOSR VALUE){
+        pivoteIntake.set(ControlMode.PercentOutput, 1);
      }*/
-      pivoteIntake.set(ControlMode.PercentOutput, 1);
+    pivoteIntake.set(ControlMode.PercentOutput, 1);
   }
   public void Down_Intake(){
-      SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
-      /*if(pivoteIntake.getSelectedSensorPosition()< PUT SENOSR VALUE){
-          pivoteIntake.set(ControlMode.PercentOutput, 1);
-     }*/
-      pivoteIntake.set(ControlMode.PercentOutput, -0.6);
+    SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
+    /*if(pivoteIntake.getSelectedSensorPosition()< PUT SENOSR VALUE){
+        pivoteIntake.set(ControlMode.PercentOutput, 1);
+    }*/
+    pivoteIntake.set(ControlMode.PercentOutput, -0.6);
   }
   public void Ball_In_Intake(){
-      leftIntakeWheel.set(ControlMode.PercentOutput, -1);
-      rightIntakeWheel.set(ControlMode.PercentOutput, -1);
+    leftIntakeWheel.set(ControlMode.PercentOutput, -1);
+    rightIntakeWheel.set(ControlMode.PercentOutput, -1);
   }
   public void Ball_Out_Intake(){
-      leftIntakeWheel.set(ControlMode.PercentOutput, 1);
-      rightIntakeWheel.set(ControlMode.PercentOutput, 1);
+    leftIntakeWheel.set(ControlMode.PercentOutput, 1);
+    rightIntakeWheel.set(ControlMode.PercentOutput, 1);
   }
   public void Hatch_Push(){
+    hPiston.set(Value.kForward);
   }
   public void Hatch_In(){
+    hPiston.set(Value.kReverse);
 
   }
 
@@ -64,20 +67,19 @@ public class Intake extends Subsystem {
   }
   public void Stop_Intake() {
     leftIntakeWheel.set(ControlMode.PercentOutput, 0.0);
-      rightIntakeWheel.set(ControlMode.PercentOutput, 0.0);
-      pivoteIntake.set(ControlMode.PercentOutput, 0.0);
+    rightIntakeWheel.set(ControlMode.PercentOutput, 0.0);
+    pivoteIntake.set(ControlMode.PercentOutput, 0.0);
 }
 
   
   public void initDefaultCommand() {
-      
-      // Set the default command for a subsystem here.
-      // setDefaultCommand(new MySpecialCommand());
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 
   @Override
   public void periodic() {
-      // Put code here to be run every loop
+    // Put code here to be run every loop
 
   }
  
