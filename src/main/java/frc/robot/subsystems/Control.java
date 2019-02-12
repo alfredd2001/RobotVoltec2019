@@ -18,6 +18,10 @@ public class Control extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   Compressor compressor = RobotMap.Compressor;
+  public Control() {
+    compressor = RobotMap.Compressor;
+    addChild("Compressor",compressor);        
+}
   @Override
   public void initDefaultCommand() {
 

@@ -12,6 +12,7 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,18 +22,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Add your docs here.
  */
-public class Elevator extends Subsystem {
+public class Elevator extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-
-  // seter pid correcto
-  static double p = 0.01;
-  static double i = 0.0;
-  static double d = 0.0;
-  double height;
-  int level = 0;
-  int MotorDirection;
+  private WPI_TalonSRX elevatorMotor;
+  private static double Kp = 0.001;
+  private static double Ki = 0.0;
+  private static double Kd = 0.0;
+  private static double tolerance = 10.00;
   boolean override = false;
+  
+  public Elevator(){
+    super("Elevator", Kp, Ki, Kd);
+    elevatorMotor = RobotMap.lift;
+    setOutputRange(-1, 1);
+    setAbsoluteTolerance(tolerance);
+    getPIDController().setContinuous(true);
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -40,21 +46,21 @@ public class Elevator extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public void Stop_Elevador() {
+    elevatorMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
   public void elevate(double input) {
 
-    double height = RobotMap.ENCODER_ELEVATOR.getDistance();
-    Command command;
-    if (height > 26.2) {
+  }
 
-    } else if (height > 19.3) {
+  @Override
+  protected double returnPIDInput() {
+    return elevatorMotor.getSelectedSensorPosition();
+  }
 
-    } else if (height > 11.33) {
-
-    } else if (height > 0.01) {
-
-    } else {
-
-    }
-
+  @Override
+  protected void usePIDOutput(double output) {
+    elevatorMotor.set(ControlMode.PercentOutput, output);
   }
 }

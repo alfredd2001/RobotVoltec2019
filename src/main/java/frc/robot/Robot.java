@@ -19,9 +19,7 @@ import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Control;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.IntakeCargo;
-import frc.robot.subsystems.IntakeHatches;
-import frc.robot.subsystems.IntakePivot;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PistonHab;
 import frc.robot.subsystems.Vision;
 import frc.robot.RobotMap;
@@ -33,9 +31,7 @@ public class Robot extends TimedRobot {
   /********subsistemas del robot*******************************/
 	public static Chassis chassis;
 	public static Elevator elevator;
-	public static IntakeCargo intakeCargo;
-	public static IntakeHatches intakeHatches;
-	public static IntakePivot intakePivot;
+	public static Intake intake;
 	public static PistonHab pistonHab;
   public static Vision vision;
   public static Control control;
@@ -59,9 +55,7 @@ public class Robot extends TimedRobot {
    /*******aqui vamos inicializar los subsystemas que se necesite*************************/
 		chassis = new Chassis();
 		elevator = new Elevator();
-		intakeCargo = new IntakeCargo();
-		intakeHatches = new IntakeHatches();
-		intakePivot = new IntakePivot();
+		intake = new Intake();
     pistonHab = new PistonHab();
     vision = new Vision();
 		control = new Control();
