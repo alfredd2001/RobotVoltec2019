@@ -13,12 +13,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Control;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PistonHab;
 import frc.robot.subsystems.Vision;
@@ -34,9 +32,7 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static PistonHab pistonHab;
   public static Vision vision;
-  public static Control control;
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-	/****************************************************************************************/
+  public static Control control;	/****************************************************************************************/
   public static TurnToAngle turnToAngle;
 
   Command m_autonomousCommand;
@@ -63,7 +59,7 @@ public class Robot extends TimedRobot {
 
     m_oi = new OI();
 
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     chassis.ahrs.reset();
     SmartDashboard.putNumber("Gyro", chassis.ahrs.getAngle());
