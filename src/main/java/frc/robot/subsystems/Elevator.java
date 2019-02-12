@@ -26,14 +26,12 @@ public class Elevator extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private WPI_TalonSRX elevatorMotor;
-  private static double Kp = 0.001;
-  private static double Ki = 0.0;
-  private static double Kd = 0.0;
   private static double tolerance = 10.00;
+  public static int ret;
   boolean override = false;
   
   public Elevator(){
-    super("Elevator", Kp, Ki, Kd);
+    super("Elevator", RobotMap.KpElevator, RobotMap.KiElevator,RobotMap.KdElevator);
     elevatorMotor = RobotMap.lift;
     setOutputRange(-1, 1);
     setAbsoluteTolerance(tolerance);
@@ -50,13 +48,14 @@ public class Elevator extends PIDSubsystem {
     elevatorMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void elevate(double input) {
-
-  }
+  public void setPIDValues(){
+		getPIDController().setPID(RobotMap.KpIntakePivot, RobotMap.KiIntakePivot, RobotMap.KdIntakePivot);
+	}
 
   @Override
   protected double returnPIDInput() {
-    return elevatorMotor.getSelectedSensorPosition();
+    ret=elevatorMotor.getSelectedSensorPosition();
+    return ret;
   }
 
   @Override

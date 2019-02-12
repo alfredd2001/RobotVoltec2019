@@ -74,8 +74,24 @@ public static final int REAR_HAB_PISTON_ACTIVATE = 2;
   public static double KpChassisGyro = 0.03;
   public static double KiChassisGyro = 0.0001;
   public static double KdChassisGyro = 0.01;
-  /******************************************/
 
+  public static double KpIntakePivot = 0.001;
+  public static double KiIntakePivot = 0.0;
+  public static double KdIntakePivot = 0.0;
+
+  public static double KpElevator = 0.001;
+  public static double KiElevator = 0.0;
+  public static double KdElevator = 0.0;
+  /******************************************/
+  /****************ELEVATOR LEVELS VALUE********/
+  public static int HatchLevel1 = 0;
+  public static int HatchLevel2 = 0;
+  public static int HatchLevel3 = 0;
+  public static int CargoLevel1 = 0;
+  public static int CargoLevel2 = 0;
+  public static int CargoLevel3 = 0;
+  public static int CargoToCargoShip = 0;
+  /*********************************************/
   public static void init(){
     /*************chasis*****************************/
     pdp = new PowerDistributionPanel();

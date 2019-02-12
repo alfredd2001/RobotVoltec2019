@@ -36,16 +36,7 @@ public class TurnToAngle extends Command {
   protected void execute() {
     Robot.chassis.setPIDValues();
     
-    //Robot.chassis.differentialDrive.arcadeDrive(0.4, .05*-Robot.chassis.ahrs.getAngle());
-    /*if(Robot.chassis.ahrs.getAngle() < 0){
-      sensitivity *= -1;
-    } else if (Robot.chassis.ahrs.getAngle() > 0 && sensitivity < 0){
-      sensitivity *= -1;
-    }
-    Robot.chassis.differentialDrive.tankDrive(0.05*Robot.chassis.ahrs.getAngle(), 0.05*(Robot.chassis.ahrs.getAngle() + sensitivity));*/
   }
-  
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

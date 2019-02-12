@@ -9,33 +9,37 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class Intake_AngleDown extends Command {
-  public Intake_AngleDown() {
-    requires(Robot.intake);
+public class Elevator_Level1Hatch extends Command {
+  public Elevator_Level1Hatch() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevator.setSetpoint(RobotMap.HatchLevel1);
+    Robot.elevator.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.Down_Intake();
+    Robot.elevator.setPIDValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs(RobotMap.HatchLevel1-Robot.elevator.ret)<10.00;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.Stop_Intake();
+    Robot.elevator.Stop_Elevador();
   }
 
   // Called when another command which requires one or more of the same

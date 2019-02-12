@@ -29,14 +29,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class Chassis extends PIDSubsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private static final double TOLERANCE=0.15;  //tolerancia del joystick(quita el error)
+  private static final double TOLERANCE=0.15; 
 	private static int direction = 1;  //para invertir los ejes si necesario
-	//private static WPI_TalonSRX[] talons;  //arreglo para guadar los talon del chasis
+	
 	public static DifferentialDrive differentialDrive;
 	private static WPI_TalonSRX mid;
 	public static AHRS ahrs;
 	public static double kToleranceDegrees = 10.0;
-	double sensitivity = 2.7;
 	public static int ret;
   //////////constructor de la clase/////////////////////
 	public Chassis(){
@@ -89,11 +88,6 @@ public class Chassis extends PIDSubsystem {
 
 	@Override
 	protected void usePIDOutput(double output) {
-		if(Robot.chassis.ahrs.getAngle() < 0 && sensitivity > 0){
-			sensitivity *= -1;
-    } else if (Robot.chassis.ahrs.getAngle() > 0 && sensitivity < 0){
-      sensitivity *= -1;
-    }
 		differentialDrive.tankDrive(-output, -output);
 	}
 }

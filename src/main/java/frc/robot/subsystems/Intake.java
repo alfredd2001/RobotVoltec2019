@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -20,32 +21,33 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class Intake extends Subsystem {
+public class Intake extends PIDSubsystem {
   private static WPI_VictorSPX leftIntakeWheel;
   private static WPI_VictorSPX rightIntakeWheel;
   private static WPI_TalonSRX pivoteIntake;
   private static DoubleSolenoid hPiston;
 
   public Intake() {
+    super("Intake", RobotMap.KpIntakePivot, RobotMap.KiIntakePivot, RobotMap.KdIntakePivot);
     leftIntakeWheel = RobotMap.intakeLeft; 
     rightIntakeWheel = RobotMap.intakeRight;
     pivoteIntake = RobotMap.intakePivote;
     hPiston= RobotMap.HPiston;
   }
-  public void Up_Intake(){
+  /*public void Up_Intake(){
     SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
-   /*if(pivoteIntake.getSelectedSensorPosition()> PUT SENOSR VALUE){
-        pivoteIntake.set(ControlMode.PercentOutput, 1);
-     }*/
+    if(pivoteIntake.getSelectedSensorPosition()> PUT SENOSR VALUE){
+      pivoteIntake.set(ControlMode.PercentOutput, 1);
+    }
     pivoteIntake.set(ControlMode.PercentOutput, 1);
   }
   public void Down_Intake(){
     SmartDashboard.putNumber("Encoder Pivote", pivoteIntake.getSelectedSensorPosition(0));
-    /*if(pivoteIntake.getSelectedSensorPosition()< PUT SENOSR VALUE){
-        pivoteIntake.set(ControlMode.PercentOutput, 1);
-    }*/
+    if(pivoteIntake.getSelectedSensorPosition()< PUT SENOSR VALUE){
+      pivoteIntake.set(ControlMode.PercentOutput, 1);
+    }
     pivoteIntake.set(ControlMode.PercentOutput, -0.6);
-  }
+  }*/
   public void Ball_In_Intake(){
     leftIntakeWheel.set(ControlMode.PercentOutput, -1);
     rightIntakeWheel.set(ControlMode.PercentOutput, -1);
@@ -80,6 +82,16 @@ public class Intake extends Subsystem {
   @Override
   public void periodic() {
     // Put code here to be run every loop
+
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    return 0;
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
 
   }
  

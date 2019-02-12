@@ -10,32 +10,34 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Intake_AngleDown extends Command {
-  public Intake_AngleDown() {
+public class Intake_PushHatch extends Command {
+  public Intake_PushHatch() {
+    // Use requires() here to declare subsystem dependencies
     requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.intake.Hatch_Push();
+    setTimeout(0.2);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.Down_Intake();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.Stop_Intake();
+    Robot.intake.Hatch_In();
   }
 
   // Called when another command which requires one or more of the same
