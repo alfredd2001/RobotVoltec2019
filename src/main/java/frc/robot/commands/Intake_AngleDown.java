@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class Intake_AngleDown extends Command {
   public Intake_AngleDown() {
@@ -18,17 +19,21 @@ public class Intake_AngleDown extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    //Robot.intake.setSetpoint(RobotMap.PivotDown);
+    //Robot.intake.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.intake.Down_Intake();
+    //Robot.intake.setPIDValues();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //return Math.abs(RobotMap.PivotDown-Robot.intake.ret)<10.00;
     return false;
   }
 

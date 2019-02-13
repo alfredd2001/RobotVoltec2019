@@ -44,22 +44,23 @@ public class Elevator extends PIDSubsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public void Stop_Elevador() {
-    elevatorMotor.set(ControlMode.PercentOutput, 0.0);
-  }
-
-  public void setPIDValues(){
-		getPIDController().setPID(RobotMap.KpIntakePivot, RobotMap.KiIntakePivot, RobotMap.KdIntakePivot);
-	}
-
   @Override
   protected double returnPIDInput() {
-    ret=elevatorMotor.getSelectedSensorPosition();
+    ret = elevatorMotor.getSelectedSensorPosition();
     return ret;
   }
 
   @Override
   protected void usePIDOutput(double output) {
     elevatorMotor.set(ControlMode.PercentOutput, output);
+  }
+
+  /**Metodos Creados */
+  public void setPIDValues(){
+		getPIDController().setPID(RobotMap.KpElevator, RobotMap.KiElevator, RobotMap.KdElevator);
+  }
+  
+  public void Stop_Elevador() {
+    elevatorMotor.set(ControlMode.PercentOutput, 0.0);
   }
 }

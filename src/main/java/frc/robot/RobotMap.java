@@ -91,6 +91,8 @@ public static final int REAR_HAB_PISTON_ACTIVATE = 2;
   public static int CargoLevel2 = 0;
   public static int CargoLevel3 = 0;
   public static int CargoToCargoShip = 0;
+  public static int PivotUp = 0;
+  public static int PivotDown = 0;
   /*********************************************/
   public static void init(){
     /*************chasis*****************************/

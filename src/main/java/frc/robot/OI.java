@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Intake_AngleDown;
+import frc.robot.commands.Intake_AngleUp;
 import frc.robot.commands.TurnToAngle;
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,10 +20,10 @@ public class OI {
   public Joystick Stick1; //declara un joystick
   public Joystick Stick2; //declara un joystick
 
-  public JoystickButton LogitechPOVDown;
-  public JoystickButton LogitechPOVRight; //declara un boton de joystick LT (IO - 6)
-  public JoystickButton LogitechPOVUp;
-  public JoystickButton LogitechPOVLeft;
+  public JoystickButton LogitechB1;
+  public JoystickButton LogitechB2; //declara un boton de joystick LT (IO - 6)
+  public JoystickButton LogitechB3;
+  public JoystickButton LogitechB4;
 
   
   public OI(){
@@ -30,11 +32,12 @@ public class OI {
     Stick1 = new Joystick(0);  //une el josytick al objeto stick principal
     Stick2 = new Joystick(1);  //une el josytick al objeto
     
-   
-   /* ////////////////////////////////////////////////////////////////////////
-    LogitechPOVDown = new JoystickButton(Stick1, 10);    
-    LogitechPOVRight = new JoystickButton(Stick1, 8);
-    LogitechPOVUp = new JoystickButton(Stick1, 7);
+    LogitechB1 = new JoystickButton(Stick1, 6);    
+    LogitechB2 = new JoystickButton(Stick1, 7);
+
+    LogitechB1.whenPressed(new Intake_AngleUp());
+    LogitechB2.whenPressed(new Intake_AngleDown());
+    /*LogitechPOVUp = new JoystickButton(Stick1, 8);
     LogitechPOVLeft = new JoystickButton(Stick1, 9);
 
     LogitechPOVDown.whenReleased(new TurnToAngle(180)); 
